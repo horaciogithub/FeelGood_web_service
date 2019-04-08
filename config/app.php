@@ -165,6 +165,8 @@ return [
         // Añadimos el service provider para la autentificación de usuarios
         Laravel\Passport\PassportServiceProvider::class,
 
+        Barryvdh\Cors\ServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
