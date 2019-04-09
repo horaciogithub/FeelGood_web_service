@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrainingTable extends Model
 {
-    protected $table = 'training_table';
+    protected $table = 'trainning_table';
 
     protected function warmUp(){
         return $this -> belongsTo(WarmUp::class, 'warm_up');  

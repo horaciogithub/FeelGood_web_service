@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExerciceTable extends Model
 {
-    protected $table = 'exercice_table';
+    protected $table = 'exercise_table';
 
     protected function mond(){
         return $this -> belongsTo(TrainingTable::class, 'monday');
