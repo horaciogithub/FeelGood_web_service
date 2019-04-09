@@ -12,5 +12,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+
+        /* Migra los datos de la tabla de usuarios */
+        $this->call(UsersSeeder::class);
     }
 }
