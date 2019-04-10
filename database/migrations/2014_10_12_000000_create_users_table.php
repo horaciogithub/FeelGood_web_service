@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('type')->required();
             $table->date('birth_date')->nullable();
-            $table->string('img', 255)->nullable();
+            $table->string('img', 255)->nullable()->default('img/user_profiles/avatar.png');
             $table->boolean('is_admin')->default(false);
             $table->integer('complaints')->default(0);
             $table->integer('warnings')->default(0);
