@@ -18,6 +18,10 @@ Route::get('users', 'API\UsersDataController@users');
 /* Devuelve los mensajes generados por los usuarios en la base de datos */
 Route::get('messages', 'API\MessagesController@messages');
 
+/* Devuelve los mensajes generados por los usuarios en la base de datos */
+Route::post('messageRegistration', 'API\MessagesController@messageRegistration');
+Route::delete('messageDelete', 'API\MessagesController@messageDelete');
+
 /* Servicio de login de usuarios */
 Route::post('login', 'API\UserController@login');
 

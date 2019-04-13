@@ -109,36 +109,42 @@ class UserController extends Controller
 
                 // It finds the exercise table
                 $exerciseId      = AssignExercise::whereEmail($user->email)->value('id_exerc');
-                $ExerciceTableId = ExerciceTable::find($exerciseId);
+                
+                if($exerciseId != null){
+                    $ExerciceTableId = ExerciceTable::find($exerciseId);
 
-                $monExerc    = TrainingTable::find($ExerciceTableId->monday);
-                $tuesExerc   = TrainingTable::find($ExerciceTableId->tuesday);
-                $wednesExerc = TrainingTable::find($ExerciceTableId->wednesday);
-                $thursExerc  = TrainingTable::find($ExerciceTableId->thursday);
-                $friExerc    = TrainingTable::find($ExerciceTableId->friday);
-                $saturExerc  = TrainingTable::find($ExerciceTableId->saturday);
-                $sunExerc    = TrainingTable::find($ExerciceTableId->friday);
-                    
-                // Creates the exercise table per day of the week
-                $monExercTable  = $this -> makeExerciceTable($monExerc);
-                $tuesExercTable = $this -> makeExerciceTable($tuesExerc);
-                $wedExercTable  = $this -> makeExerciceTable($wednesExerc);
-                $thuExercTable  = $this -> makeExerciceTable($thursExerc);
-                $friExercTable  = $this -> makeExerciceTable($friExerc);
-                $satExercTable  = $this -> makeExerciceTable($saturExerc);
-                $sunExercTable  = $this -> makeExerciceTable($sunExerc);
+                    $monExerc    = TrainingTable::find($ExerciceTableId->monday);
+                    $tuesExerc   = TrainingTable::find($ExerciceTableId->tuesday);
+                    $wednesExerc = TrainingTable::find($ExerciceTableId->wednesday);
+                    $thursExerc  = TrainingTable::find($ExerciceTableId->thursday);
+                    $friExerc    = TrainingTable::find($ExerciceTableId->friday);
+                    $saturExerc  = TrainingTable::find($ExerciceTableId->saturday);
+                    $sunExerc    = TrainingTable::find($ExerciceTableId->friday);
+                        
+                    // Creates the exercise table per day of the week
+                    $monExercTable  = $this -> makeExerciceTable($monExerc);
+                    $tuesExercTable = $this -> makeExerciceTable($tuesExerc);
+                    $wedExercTable  = $this -> makeExerciceTable($wednesExerc);
+                    $thuExercTable  = $this -> makeExerciceTable($thursExerc);
+                    $friExercTable  = $this -> makeExerciceTable($friExerc);
+                    $satExercTable  = $this -> makeExerciceTable($saturExerc);
+                    $sunExercTable  = $this -> makeExerciceTable($sunExerc);
 
-                $table = [
-                    'monExerc'  => $monExercTable,
-                    'tuesExerc' => $tuesExercTable,
-                    'wedExerc'  => $wedExercTable,
-                    'thuExerc'  => $thuExercTable,
-                    'friExerc'  => $friExercTable,
-                    'satExerc'  => $satExercTable,
-                    'sunExerc'  => $sunExercTable,
-                ];
+                    $table = [
+                        'monExerc'  => $monExercTable,
+                        'tuesExerc' => $tuesExercTable,
+                        'wedExerc'  => $wedExercTable,
+                        'thuExerc'  => $thuExercTable,
+                        'friExerc'  => $friExercTable,
+                        'satExerc'  => $satExercTable,
+                        'sunExerc'  => $sunExercTable,
+                    ];
 
-                return response()->json(['userData' => $user, 'success' => $success, 'table' => $table], $this->successStatus);
+                    return response()->json(['userData' => $user, 'success' => $success, 'table' => $table], $this->successStatus);
+                } 
+                else {
+                    return response()->json(['userData' => $user, 'success' => $success, 'table' => null], $this->successStatus);
+                }
             }
             else {
                 return response()->json(['userData' => $user, 'success' => $success], $this->successStatus);
