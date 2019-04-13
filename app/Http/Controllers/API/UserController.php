@@ -10,11 +10,84 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
+use App\Trainer;
+use App\Client;
+use App\AssignExercise;
+use App\ExerciceTable;
+use App\TrainingTable;
+use App\WarmUp;
+use App\Exercises;
+
 
 class UserController extends Controller
 {
 
     public $successStatus = 200;
+
+    private function makeExerciceTable($day){
+
+        $table = array(
+            
+            // Table routine
+            'routine' => $day->routine,
+
+            // Warm up
+            array(
+                'name' => WarmUp::find($day->warm_up)->name,
+                'time' => WarmUp::find($day->warm_up)->time,
+            ),
+
+            // Exercise 1
+            array(
+                'name' => Exercises::find($day->exerc1)->name,
+                'series' => Exercises::find($day->exerc1)->series,
+                'loops' => Exercises::find($day->exerc1)->loops,
+                'rest' => Exercises::find($day->exerc1)->rest,
+            ),
+
+            // Exercise 2
+            array(
+                'name' => Exercises::find($day->exerc2)->name,
+                'series' => Exercises::find($day->exerc2)->series,
+                'loops' => Exercises::find($day->exerc2)->loops,
+                'rest' => Exercises::find($day->exerc2)->rest,
+            ),
+            
+            // Exercise 3
+            array(
+                'name' => Exercises::find($day->exerc3)->name,
+                'series' => Exercises::find($day->exerc3)->series,
+                'loops' => Exercises::find($day->exerc3)->loops,
+                'rest' => Exercises::find($day->exerc3)->rest,
+            ),
+
+            // Exercise 4
+            array(
+                'name' => Exercises::find($day->exerc4)->name,
+                'series' => Exercises::find($day->exerc4)->series,
+                'loops' => Exercises::find($day->exerc4)->loops,
+                'rest' => Exercises::find($day->exerc4)->rest,
+            ),
+
+            // Exercise 5
+            array(
+                'name' => Exercises::find($day->exerc5)->name,
+                'series' => Exercises::find($day->exerc5)->series,
+                'loops' => Exercises::find($day->exerc5)->loops,
+                'rest' => Exercises::find($day->exerc5)->rest,
+            ),
+
+            // Exercise 6
+            array(
+                'name' => Exercises::find($day->exerc6)->name,
+                'series' => Exercises::find($day->exerc6)->series,
+                'loops' => Exercises::find($day->exerc6)->loops,
+                'rest' => Exercises::find($day->exerc6)->rest,
+            ),
+        );
+
+        return $table;
+    }
 
 
     /**
@@ -27,7 +100,49 @@ class UserController extends Controller
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
             $success['token'] =  $user->createToken('MyApp')->accessToken;
-            return response()->json(['userData' => $user, 'success' => $success], $this->successStatus);
+
+            if($user->type == 'user') {
+
+                /* ----------------- */
+                /*     EXERCISES     */
+                /* ----------------- */
+
+                // It finds the exercise table
+                $exerciseId      = AssignExercise::whereEmail($user->email)->value('id_exerc');
+                $ExerciceTableId = ExerciceTable::find($exerciseId);
+
+                $monExerc    = TrainingTable::find($ExerciceTableId->monday);
+                $tuesExerc   = TrainingTable::find($ExerciceTableId->tuesday);
+                $wednesExerc = TrainingTable::find($ExerciceTableId->wednesday);
+                $thursExerc  = TrainingTable::find($ExerciceTableId->thursday);
+                $friExerc    = TrainingTable::find($ExerciceTableId->friday);
+                $saturExerc  = TrainingTable::find($ExerciceTableId->saturday);
+                $sunExerc    = TrainingTable::find($ExerciceTableId->friday);
+                    
+                // Creates the exercise table per day of the week
+                $monExercTable  = $this -> makeExerciceTable($monExerc);
+                $tuesExercTable = $this -> makeExerciceTable($tuesExerc);
+                $wedExercTable  = $this -> makeExerciceTable($wednesExerc);
+                $thuExercTable  = $this -> makeExerciceTable($thursExerc);
+                $friExercTable  = $this -> makeExerciceTable($friExerc);
+                $satExercTable  = $this -> makeExerciceTable($saturExerc);
+                $sunExercTable  = $this -> makeExerciceTable($sunExerc);
+
+                $table = [
+                    'monExerc'  => $monExercTable,
+                    'tuesExerc' => $tuesExercTable,
+                    'wedExerc'  => $wedExercTable,
+                    'thuExerc'  => $thuExercTable,
+                    'friExerc'  => $friExercTable,
+                    'satExerc'  => $satExercTable,
+                    'sunExerc'  => $sunExercTable,
+                ];
+
+                return response()->json(['userData' => $user, 'success' => $success, 'table' => $table], $this->successStatus);
+            }
+            else {
+                return response()->json(['userData' => $user, 'success' => $success], $this->successStatus);
+            }
         }
         else{
             return response()->json(['error'=>'Unauthorised'], 401);
