@@ -86,6 +86,7 @@
 
                 <div class="links">
                     <a href="http://localhost:8000/api/users">Usuarios</a>
+                    <a href="http://localhost:8000/api/clients">Clientes</a>
                     <a href="http://localhost:8000/api/messages">Mensajes</a>
                 </div>
             </div>

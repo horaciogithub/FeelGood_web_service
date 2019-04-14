@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -10,10 +9,15 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 /* Devuelve información se usuarios de la base de datos */
 Route::get('users', 'API\UsersDataController@users');
+Route::delete('userDelete', 'API\UsersDataController@userDelete');
+Route::post('userWarning', 'API\UsersDataController@userWarning');
+
+/* Devuelve información de los clientes */
+Route::get('clients', 'API\UsersDataController@clients');
 
 /* Devuelve los mensajes generados por los usuarios en la base de datos */
 Route::get('messages', 'API\MessagesController@messages');
@@ -29,6 +33,6 @@ Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 
 /* Servicio que muestra los detalles de los  usuarios logeados */
-Route::group(['middleware' => 'auth:api'], function(){
-	Route::post('details', 'API\UserController@details');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::post('details', 'API\UserController@details');
 });

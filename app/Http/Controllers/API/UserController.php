@@ -1,33 +1,28 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
-
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
-use Illuminate\Support\Facades\Auth;
-use Validator;
-
-use App\Trainer;
-use App\Client;
 use App\AssignExercise;
 use App\ExerciceTable;
-use App\TrainingTable;
-use App\WarmUp;
 use App\Exercises;
-
+use App\Http\Controllers\Controller;
+use App\TrainingTable;
+use App\User;
+use App\WarmUp;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class UserController extends Controller
 {
 
     public $successStatus = 200;
 
-    private function makeExerciceTable($day){
+    private function makeExerciceTable($day)
+    {
 
         $table = array(
-            
+
             // Table routine
             'routine' => $day->routine,
 
@@ -52,7 +47,7 @@ class UserController extends Controller
                 'loops' => Exercises::find($day->exerc2)->loops,
                 'rest' => Exercises::find($day->exerc2)->rest,
             ),
-            
+
             // Exercise 3
             array(
                 'name' => Exercises::find($day->exerc3)->name,
@@ -89,72 +84,68 @@ class UserController extends Controller
         return $table;
     }
 
-
     /**
      * login api
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function login(){
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+    public function login(Request $request)
+    {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')->accessToken;
+            $success['token'] = $user->createToken('MyApp')->accessToken;
 
-            if($user->type == 'user') {
+            if ($user->type == 'user') {
 
                 /* ----------------- */
                 /*     EXERCISES     */
                 /* ----------------- */
 
                 // It finds the exercise table
-                $exerciseId      = AssignExercise::whereEmail($user->email)->value('id_exerc');
-                
-                if($exerciseId != null){
+                $exerciseId = AssignExercise::whereEmail($user->email)->value('id_exerc');
+
+                if ($exerciseId != null) {
                     $ExerciceTableId = ExerciceTable::find($exerciseId);
 
-                    $monExerc    = TrainingTable::find($ExerciceTableId->monday);
-                    $tuesExerc   = TrainingTable::find($ExerciceTableId->tuesday);
+                    $monExerc = TrainingTable::find($ExerciceTableId->monday);
+                    $tuesExerc = TrainingTable::find($ExerciceTableId->tuesday);
                     $wednesExerc = TrainingTable::find($ExerciceTableId->wednesday);
-                    $thursExerc  = TrainingTable::find($ExerciceTableId->thursday);
-                    $friExerc    = TrainingTable::find($ExerciceTableId->friday);
-                    $saturExerc  = TrainingTable::find($ExerciceTableId->saturday);
-                    $sunExerc    = TrainingTable::find($ExerciceTableId->friday);
-                        
+                    $thursExerc = TrainingTable::find($ExerciceTableId->thursday);
+                    $friExerc = TrainingTable::find($ExerciceTableId->friday);
+                    $saturExerc = TrainingTable::find($ExerciceTableId->saturday);
+                    $sunExerc = TrainingTable::find($ExerciceTableId->friday);
+
                     // Creates the exercise table per day of the week
-                    $monExercTable  = $this -> makeExerciceTable($monExerc);
-                    $tuesExercTable = $this -> makeExerciceTable($tuesExerc);
-                    $wedExercTable  = $this -> makeExerciceTable($wednesExerc);
-                    $thuExercTable  = $this -> makeExerciceTable($thursExerc);
-                    $friExercTable  = $this -> makeExerciceTable($friExerc);
-                    $satExercTable  = $this -> makeExerciceTable($saturExerc);
-                    $sunExercTable  = $this -> makeExerciceTable($sunExerc);
+                    $monExercTable = $this->makeExerciceTable($monExerc);
+                    $tuesExercTable = $this->makeExerciceTable($tuesExerc);
+                    $wedExercTable = $this->makeExerciceTable($wednesExerc);
+                    $thuExercTable = $this->makeExerciceTable($thursExerc);
+                    $friExercTable = $this->makeExerciceTable($friExerc);
+                    $satExercTable = $this->makeExerciceTable($saturExerc);
+                    $sunExercTable = $this->makeExerciceTable($sunExerc);
 
                     $table = [
-                        'monExerc'  => $monExercTable,
+                        'monExerc' => $monExercTable,
                         'tuesExerc' => $tuesExercTable,
-                        'wedExerc'  => $wedExercTable,
-                        'thuExerc'  => $thuExercTable,
-                        'friExerc'  => $friExercTable,
-                        'satExerc'  => $satExercTable,
-                        'sunExerc'  => $sunExercTable,
+                        'wedExerc' => $wedExercTable,
+                        'thuExerc' => $thuExercTable,
+                        'friExerc' => $friExercTable,
+                        'satExerc' => $satExercTable,
+                        'sunExerc' => $sunExercTable,
                     ];
 
                     return response()->json(['userData' => $user, 'success' => $success, 'table' => $table], $this->successStatus);
-                } 
-                else {
+                } else {
                     return response()->json(['userData' => $user, 'success' => $success, 'table' => null], $this->successStatus);
                 }
-            }
-            else {
+            } else {
                 return response()->json(['userData' => $user, 'success' => $success], $this->successStatus);
             }
-        }
-        else{
-            return response()->json(['error'=>'Unauthorised'], 401);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
-
 
     /**
      * Register api
@@ -171,30 +162,30 @@ class UserController extends Controller
             'c_password' => 'required|same:password',
         ]);
 
-
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);            
+            return response()->json(['error' => $validator->errors()], 401);
         }
-
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
 
-        $success['token'] =  $user->createToken('MyApp')->accessToken;
+        $success['token'] = $user->createToken('MyApp')->accessToken;
         //$success['userData'] =  $user->name;
 
+        // Tras el registro, logea al usuario
+        return $this->login($request);
 
-        return response()->json(['success'=>$success, 'userData'=>$user], $this->successStatus);
+        // Otra opción es la siguiente
+        // return response()->json(['success'=>$success, 'userData'=>$user], $this->successStatus);
     }
-
 
     /**
      * details api
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function details()
     {
         $user = Auth::user();

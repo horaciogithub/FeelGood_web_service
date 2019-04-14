@@ -16,6 +16,7 @@ class MessagesController extends Controller
                 'users.img', 
                 'users.name', 
                 'users.surname', 
+                'users.type',
                 'users.email', 
                 'forum.subject')
             ->get();
