@@ -14,6 +14,7 @@ class UsersDataController extends Controller
     {
         $usuarios = User::where('type', '!=', 'admin')
             ->select('id', 'img', 'email', 'name', 'surname', 'type', 'complaints', 'warnings')
+            ->orderByRaw('id  ASC')
             ->get();
 
         return response()->json($usuarios);
@@ -33,6 +34,7 @@ class UsersDataController extends Controller
     {
         $id = $request->id;
         $warnings = User::find($id)->warnings;
+        $warnings = intval($warnings);
         $warnings++;
         $success = User::find($id)->update(['warnings' => $warnings]);
 
