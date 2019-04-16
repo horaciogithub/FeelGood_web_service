@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\AssignExercise;
+use App\Client;
 use App\ExerciceTable;
 use App\Exercises;
 use App\Http\Controllers\Controller;
@@ -169,6 +170,16 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+
+        // Crea el nuevo cliente
+        if ($request->type == 'user') {
+            $client = Client::create([
+                'email' => $request->email,
+                'sex' => $request->sex,
+                'heigth' => $request->heigth,
+                'wheigth' => $request->wheigth,
+            ]);
+        }
 
         $success['token'] = $user->createToken('MyApp')->accessToken;
         //$success['userData'] =  $user->name;
