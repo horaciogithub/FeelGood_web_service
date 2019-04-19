@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\ExerciceTable;
+use Illuminate\Database\Seeder;
 
 class ExerciceTableSeeder extends Seeder
 {
@@ -13,6 +13,7 @@ class ExerciceTableSeeder extends Seeder
     public function run()
     {
         ExerciceTable::create([
+            'email' => 'abel@gmail.com',
             'monday' => 1,
             'tuesday' => 2,
             'wednesday' => 3,
@@ -20,6 +21,7 @@ class ExerciceTableSeeder extends Seeder
             'friday' => 3,
             'saturday' => 1,
             'sunday' => 1,
+            'exerc_end' => '2018-09-15',
         ]);
     }
 }
