@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\AssignExercise;
 use App\Client;
 use App\ExerciceTable;
 use App\Exercises;
@@ -104,7 +103,7 @@ class UserController extends Controller
                 /* ----------------- */
 
                 // It finds the exercise table
-                $exerciseId = AssignExercise::whereEmail($user->email)->value('id_exerc');
+                $exerciseId = ExerciceTable::whereEmail($user->email)->value('id');
 
                 if ($exerciseId != null) {
                     $ExerciceTableId = ExerciceTable::find($exerciseId);

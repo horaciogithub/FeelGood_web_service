@@ -19,6 +19,15 @@ Route::post('userWarning', 'API\UsersDataController@userWarning');
 /* Devuelve información de los clientes */
 Route::get('clients', 'API\UsersDataController@clients');
 
+/* Devuelve la tabla de ejercicios en base a su email */
+Route::post('clientTable', 'API\UsersDataController@clientTable');
+
+/* Registra la rutina de ejercicios de un usuario */
+Route::post('postTable', 'API\UsersDataController@postTable');
+
+/* Elimina la rutina de ejercicios de un usuario */
+Route::delete('deleteTable', 'API\UsersDataController@deleteTable');
+
 /* Devuelve los mensajes generados por los usuarios en la base de datos */
 Route::get('messages', 'API\MessagesController@messages');
 

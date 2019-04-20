@@ -23,5 +23,17 @@ class ExerciceTableSeeder extends Seeder
             'sunday' => 1,
             'exerc_end' => '2018-09-15',
         ]);
+
+        ExerciceTable::create([
+            'email' => 'obed@gmail.com',
+            'monday' => 1,
+            'tuesday' => null,
+            'wednesday' => null,
+            'thursday' => null,
+            'friday' => null,
+            'saturday' => null,
+            'sunday' => null,
+            'exerc_end' => '2018-09-15',
+        ]);
     }
 }

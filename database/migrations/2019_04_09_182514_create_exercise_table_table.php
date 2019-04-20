@@ -16,11 +16,11 @@ class CreateExerciseTableTable extends Migration
         Schema::create('exercise_table', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email', 40)->unique();
-            $table->unsignedInteger('monday')->required();
+            $table->unsignedInteger('monday')->nullable();
             $table->unsignedInteger('tuesday')->nullable();
-            $table->unsignedInteger('wednesday')->required();
+            $table->unsignedInteger('wednesday')->nullable();
             $table->unsignedInteger('thursday')->nullable();
-            $table->unsignedInteger('friday')->required();
+            $table->unsignedInteger('friday')->nullable();
             $table->unsignedInteger('saturday')->nullable();
             $table->unsignedInteger('sunday')->nullable();
 

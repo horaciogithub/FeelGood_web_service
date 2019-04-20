@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Client;
+use App\ExerciceTable;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -44,7 +45,96 @@ class UsersDataController extends Controller
     /* Muestra los datos del cliente */
     public function clients()
     {
-        $clients = Client::all();
+        $clients = Client::leftJoin('exercise_table', 'clients.email', '=', 'exercise_table.email')
+            ->select(
+                'clients.id',
+                'clients.email',
+                'clients.sex',
+                'clients.heigth',
+                'clients.wheigth',
+                'exercise_table.id AS idTable',
+                'exercise_table.email AS emailTable',
+                'exercise_table.monday',
+                'exercise_table.tuesday',
+                'exercise_table.wednesday',
+                'exercise_table.thursday',
+                'exercise_table.friday',
+                'exercise_table.saturday',
+                'exercise_table.sunday',
+                'exercise_table.created_at',
+                'exercise_table.exerc_end',
+            )
+            ->get();
+
         return response()->json($clients);
+    }
+
+    public function clientTable(Request $request)
+    {
+        $client = Client::leftJoin('exercise_table', 'clients.email', '=', 'exercise_table.email')
+            ->select(
+                'clients.id',
+                'clients.email',
+                'clients.sex',
+                'clients.heigth',
+                'clients.wheigth',
+                'exercise_table.id AS idTable',
+                'exercise_table.email AS emailTable',
+                'exercise_table.monday',
+                'exercise_table.tuesday',
+                'exercise_table.wednesday',
+                'exercise_table.thursday',
+                'exercise_table.friday',
+                'exercise_table.saturday',
+                'exercise_table.sunday',
+                'exercise_table.created_at',
+                'exercise_table.exerc_end',
+            )
+            ->where('clients.email', '=', $request->email)
+            ->get();
+
+        return response()->json(['data' => $client]);
+    }
+
+    public function postTable(Request $request)
+    {
+        $table = ExerciceTable::whereEmail($request->email)->get();
+
+        if (count($table) > 0) {
+            ExerciceTable::where('email', $request->email)
+                ->update([
+                    'monday' => $request->monday,
+                    'tuesday' => $request->tuesday,
+                    'wednesday' => $request->wednesday,
+                    'thursday' => $request->thursday,
+                    'friday' => $request->friday,
+                    'saturday' => $request->saturday,
+                    'sunday' => $request->sunday,
+                    'exerc_end' => $request->exerc_end,
+                ]);
+        } else {
+            ExerciceTable::create([
+                'email' => $request->email,
+                'monday' => $request->monday,
+                'tuesday' => $request->tuesday,
+                'wednesday' => $request->wednesday,
+                'tuesday' => $request->tuesday,
+                'friday' => $request->friday,
+                'saturday' => $request->saturday,
+                'sunday' => $request->sunday,
+                'exerc_end' => $request->exerc_end,
+            ]);
+        }
+        return response()->json(['success' => 'tabla modificada']);
+    }
+
+    public function deleteTable(Request $request)
+    {
+        $email = $request->email;
+        $id = ExerciceTable::whereEmail($email)->get('id');
+        $id = $id[0]->id;
+        $success = ExerciceTable::destroy($id);
+
+        return response()->json(['success' => $success]);
     }
 }
