@@ -54,8 +54,8 @@ class ExercicesController extends Controller
     {
         // Registra el calentamiento
         $warmUp = WarmUp::create([
-            'name' => $request->name,
-            'time' => $request->time,
+            'name' => $request->warm_up_name,
+            'time' => $request->warm_up_time,
         ]);
 
         // Registra el ejercicio 1
@@ -91,14 +91,6 @@ class ExercicesController extends Controller
         ]);
 
         // Registra el ejercicio 5
-        $execise4 = Exercises::create([
-            'name' => $request->exerc4Name,
-            'series' => $request->exerc4Series,
-            'loops' => $request->exerc4Loops,
-            'rest' => $request->exerc4Rest,
-        ]);
-
-        // Registra el ejercicio 6
         $execise5 = Exercises::create([
             'name' => $request->exerc5Name,
             'series' => $request->exerc5Series,
@@ -106,7 +98,7 @@ class ExercicesController extends Controller
             'rest' => $request->exerc5Rest,
         ]);
 
-        // Registra el ejercicio 7
+        // Registra el ejercicio 6
         $execise6 = Exercises::create([
             'name' => $request->exerc6Name,
             'series' => $request->exerc6Series,
@@ -114,7 +106,7 @@ class ExercicesController extends Controller
             'rest' => $request->exerc6Rest,
         ]);
 
-        // Registra el ejercicio 8
+        // Registra el ejercicio 7
         $exerc7id = null;
         if ($request->exerc7Name) {
             $execise7 = Exercises::create([
@@ -126,9 +118,9 @@ class ExercicesController extends Controller
             $exerc7id = $execise7->id;
         }
 
-        // Registra el ejercicio 9
+        // Registra el ejercicio 8
         $exerc8id = null;
-        if ($request->exerc7Name) {
+        if ($request->exerc8Name) {
             $execise8 = Exercises::create([
                 'name' => $request->exerc8Name,
                 'series' => $request->exerc8Series,
@@ -138,9 +130,9 @@ class ExercicesController extends Controller
             $exerc8id = $execise8->id;
         }
 
-        // Registra el ejercicio 10
+        // Registra el ejercicio 9
         $exerc9id = null;
-        if ($request->exerc7Name) {
+        if ($request->exerc9Name) {
             $execise9 = Exercises::create([
                 'name' => $request->exerc9Name,
                 'series' => $request->exerc9Series,
@@ -152,7 +144,7 @@ class ExercicesController extends Controller
 
         // Registra el ejercicio 10
         $exerc10id = null;
-        if ($request->exerc7Name) {
+        if ($request->exerc10Name) {
             $execise10 = Exercises::create([
                 'name' => $request->exerc10Name,
                 'series' => $request->exerc10Series,
@@ -175,7 +167,7 @@ class ExercicesController extends Controller
             'exerc6' => $execise6->id,
             'exerc7' => $exerc7id,
             'exerc8' => $exerc8id,
-            'exerc8' => $exerc8id,
+            'exerc9' => $exerc9id,
             'exerc10' => $exerc10id,
         ]);
 
