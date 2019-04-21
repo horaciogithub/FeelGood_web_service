@@ -48,4 +48,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 /*     EXERCICES     */
 
+/* Muestra las rutinas de ejercicios */
 Route::get('exercices', 'API\ExercicesController@data');
+
+/* Registra una nueva rutina de ejercicios */
+Route::post('routineRegister', 'API\ExercicesController@routineRegister');

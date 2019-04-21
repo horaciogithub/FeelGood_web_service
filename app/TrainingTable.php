@@ -8,6 +8,10 @@ class TrainingTable extends Model
 {
     protected $table = 'trainning_table';
 
+    protected $fillable = [
+        'type', 'routine', 'warm_up', 'exerc1', 'exerc2', 'exerc3', 'exerc4', 'exerc5', 'exerc6', 'exerc7', 'exerc8', 'exerc9', 'exerc10',
+    ];
+
     protected function warmUp()
     {
         return $this->belongsTo(WarmUp::class, 'warm_up');
