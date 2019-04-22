@@ -81,6 +81,59 @@ class UserController extends Controller
             ),
         );
 
+        // Ejercicios que pueden ser nulos
+        if ($day->exerc7) {
+            $exercise = array(
+                'name' => Exercises::find($day->exerc7)->name,
+                'series' => Exercises::find($day->exerc7)->series,
+                'loops' => Exercises::find($day->exerc7)->loops,
+                'rest' => Exercises::find($day->exerc7)->rest,
+            );
+
+            array_push($table, $exercise);
+        } else {
+            $table[7] = null;
+        }
+
+        if ($day->exerc8) {
+            $exercise = array(
+                'name' => Exercises::find($day->exerc8)->name,
+                'series' => Exercises::find($day->exerc8)->series,
+                'loops' => Exercises::find($day->exerc8)->loops,
+                'rest' => Exercises::find($day->exerc8)->rest,
+            );
+
+            array_push($table, $exercise);
+        } else {
+            $table[8] = null;
+        }
+
+        if ($day->exerc9) {
+            $exercise = array(
+                'name' => Exercises::find($day->exerc9)->name,
+                'series' => Exercises::find($day->exerc9)->series,
+                'loops' => Exercises::find($day->exerc9)->loops,
+                'rest' => Exercises::find($day->exerc9)->rest,
+            );
+
+            array_push($table, $exercise);
+        } else {
+            $table[9] = null;
+        }
+
+        if ($day->exerc10) {
+            $exercise = array(
+                'name' => Exercises::find($day->exerc10)->name,
+                'series' => Exercises::find($day->exerc10)->series,
+                'loops' => Exercises::find($day->exerc10)->loops,
+                'rest' => Exercises::find($day->exerc10)->rest,
+            );
+
+            array_push($table, $exercise);
+        } else {
+            $table[10] = null;
+        }
+
         return $table;
     }
 
