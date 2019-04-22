@@ -30,6 +30,12 @@ class ExercicesController extends Controller
             $exerc5 = Exercises::where('id', '=', $trainningTable[$i]->exerc5)->get();
             $exerc6 = Exercises::where('id', '=', $trainningTable[$i]->exerc6)->get();
 
+            // Ejercicios que pueden ser nulos
+            $exerc7 = Exercises::where('id', '=', $trainningTable[$i]->exerc7)->get();
+            $exerc8 = Exercises::where('id', '=', $trainningTable[$i]->exerc8)->get();
+            $exerc9 = Exercises::where('id', '=', $trainningTable[$i]->exerc9)->get();
+            $exerc10 = Exercises::where('id', '=', $trainningTable[$i]->exerc10)->get();
+
             $data[$i] = array();
 
             for ($j = 0; $j < 1; $j++) {
@@ -43,6 +49,12 @@ class ExercicesController extends Controller
                 $data[$i]['exercice4'] = $exerc4;
                 $data[$i]['exercice5'] = $exerc5;
                 $data[$i]['exercice6'] = $exerc6;
+
+                // Ejercicios que pueden ser nulos
+                $data[$i]['exercice7'] = $exerc7;
+                $data[$i]['exercice8'] = $exerc8;
+                $data[$i]['exercice9'] = $exerc9;
+                $data[$i]['exercice10'] = $exerc10;
             }
         }
 

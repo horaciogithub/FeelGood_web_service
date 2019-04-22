@@ -16,7 +16,8 @@ class UsersDataController extends Controller
         $usuarios = User::where('type', '!=', 'admin')
             ->select('id', 'img', 'email', 'name', 'surname', 'type', 'complaints', 'warnings')
             ->orderByRaw('id  ASC')
-            ->get();
+            ->paginate(5);
+        // ->get(); sin paginación
 
         return response()->json($usuarios);
     }

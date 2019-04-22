@@ -23,7 +23,7 @@ class MessagesController extends Controller
                 'forum.created_at'
             )
             ->orderByRaw('forum.id  ASC')
-            ->get();
+            ->paginate(5);
 
         return response()->json($forum);
     }
