@@ -27,12 +27,12 @@ class ExerciceTableSeeder extends Seeder
         ExerciceTable::create([
             'email' => 'obed@gmail.com',
             'monday' => 1,
-            'tuesday' => null,
-            'wednesday' => null,
-            'thursday' => null,
-            'friday' => null,
-            'saturday' => null,
-            'sunday' => null,
+            'tuesday' => 4,
+            'wednesday' => 2,
+            'thursday' => 1,
+            'friday' => 2,
+            'saturday' => 3,
+            'sunday' => 1,
             'exerc_end' => '2018-09-15',
         ]);
     }

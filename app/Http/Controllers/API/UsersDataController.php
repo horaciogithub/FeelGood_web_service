@@ -100,10 +100,36 @@ class UsersDataController extends Controller
     public function postTable(Request $request)
     {
         $table = ExerciceTable::whereEmail($request->email)->get();
+        $success = '';
 
         if (count($table) > 0) {
-            ExerciceTable::where('email', $request->email)
-                ->update([
+            if (!empty($request->monday) && !empty($request->tuesday) && !empty($request->wednesday) &&
+                !empty($request->thursday) && !empty($request->friday) && !empty($request->saturday) &&
+                !empty($request->sunday) && !empty($request->exerc_end)) {
+
+                ExerciceTable::where('email', $request->email)
+                    ->update([
+                        'monday' => $request->monday,
+                        'tuesday' => $request->tuesday,
+                        'wednesday' => $request->wednesday,
+                        'thursday' => $request->thursday,
+                        'friday' => $request->friday,
+                        'saturday' => $request->saturday,
+                        'sunday' => $request->sunday,
+                        'exerc_end' => $request->exerc_end,
+                    ]);
+                $success = true;
+            } else {
+                $success = false;
+            }
+
+        } else {
+            if (!empty($request->monday) && !empty($request->tuesday) && !empty($request->wednesday) &&
+                !empty($request->thursday) && !empty($request->friday) && !empty($request->saturday) &&
+                !empty($request->sunday) && !empty($request->exerc_end)) {
+
+                ExerciceTable::create([
+                    'email' => $request->email,
                     'monday' => $request->monday,
                     'tuesday' => $request->tuesday,
                     'wednesday' => $request->wednesday,
@@ -113,20 +139,10 @@ class UsersDataController extends Controller
                     'sunday' => $request->sunday,
                     'exerc_end' => $request->exerc_end,
                 ]);
-        } else {
-            ExerciceTable::create([
-                'email' => $request->email,
-                'monday' => $request->monday,
-                'tuesday' => $request->tuesday,
-                'wednesday' => $request->wednesday,
-                'tuesday' => $request->tuesday,
-                'friday' => $request->friday,
-                'saturday' => $request->saturday,
-                'sunday' => $request->sunday,
-                'exerc_end' => $request->exerc_end,
-            ]);
+                $success = 'true';
+            }
+            return response()->json(['success' => $success]);
         }
-        return response()->json(['success' => 'tabla modificada']);
     }
 
     public function deleteTable(Request $request)
