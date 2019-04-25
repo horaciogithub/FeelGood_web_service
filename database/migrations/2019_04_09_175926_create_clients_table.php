@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateClientsTable extends Migration
 {
@@ -16,9 +16,9 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email', 40)->unique();
-            $table->enum('sex',['m','f']);
-            $table->decimal('heigth',5,2)->required();
-            $table->decimal('wheigth',5,2)->required();
+            $table->enum('sex', ['m', 'f']);
+            $table->decimal('heigth', 5, 2)->required();
+            $table->decimal('weigth', 5, 2)->required();
             $table->foreign('email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

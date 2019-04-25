@@ -229,7 +229,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'sex' => $request->sex,
                 'heigth' => $request->heigth,
-                'wheigth' => $request->wheigth,
+                'weigth' => $request->weigth,
             ]);
         }
 

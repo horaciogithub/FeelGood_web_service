@@ -17,28 +17,28 @@ class ClientSeeder extends Seeder
             'email' => User::where('email', 'abel@gmail.com')->value('email'),
             'sex' => 'm',
             'heigth' => 1.65,
-            'wheigth' => 62,
+            'weigth' => 62,
         ]);
 
         Client::create([
             'email' => User::where('email', 'obed@gmail.com')->value('email'),
             'sex' => 'm',
             'heigth' => 1.82,
-            'wheigth' => 52,
+            'weigth' => 52,
         ]);
 
         Client::create([
             'email' => User::where('email', 'maria@gmail.com')->value('email'),
             'sex' => 'f',
             'heigth' => 1.82,
-            'wheigth' => 150,
+            'weigth' => 150,
         ]);
 
         Client::create([
             'email' => User::where('email', 'adrian@gmail.com')->value('email'),
             'sex' => 'm',
             'heigth' => 1.82,
-            'wheigth' => 78,
+            'weigth' => 78,
         ]);
     }
 }
